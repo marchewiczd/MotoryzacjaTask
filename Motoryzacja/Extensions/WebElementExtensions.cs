@@ -21,11 +21,11 @@ namespace Motoryzacja.Extensions
         {
             try
             {
-                return webElement != null ? Int32.Parse(webElement.Text) : -1;
+                return webElement != null ? Int32.Parse(webElement.Text) : 0;
             }
             catch (FormatException)
             {
-                return -1;
+                return 0;
             }
         }
     }
