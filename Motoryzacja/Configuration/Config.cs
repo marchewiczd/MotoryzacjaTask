@@ -1,3 +1,5 @@
+using Motoryzacja.Validators;
+
 namespace Motoryzacja.Configuration
 {
     using System;
@@ -24,7 +26,19 @@ namespace Motoryzacja.Configuration
         {
             if (File.Exists(FileName))
             {
-                return JsonConvert.DeserializeObject<Config>(File.ReadAllText(FileName));
+                Config config = JsonConvert.DeserializeObject<Config>(File.ReadAllText(FileName));
+                ConfigValidator configValidator = new ConfigValidator();
+
+                if (config != null
+                    && configValidator.ValidateCarInput(config.SearchPhrase)
+                    && configValidator.ValidatePageInput(config.NumberOfPagesRequested))
+                {
+                    return config;
+                }
+
+                throw new ArgumentException($"Wartosci podane w konfiguracji sa niepoprawne:" +
+                                        $"\n\tSearchPhrase: {config.SearchPhrase}" +
+                                        $"\n\tNumberOfPagesRequested: {config.NumberOfPagesRequested}");
             }
 
             return null;
@@ -32,11 +46,22 @@ namespace Motoryzacja.Configuration
 
         private static Config CreateConfigViaConsole()
         {
-            Console.WriteLine("Podaj marke i model samochodu: ");
-            string carMakeModel = Console.ReadLine();
+            ConfigValidator configValidator = new ConfigValidator();
+            string carMakeModel = string.Empty;
+            string pageNumber = string.Empty;
+
+            do
+            {
+                Console.WriteLine("Podaj marke i model samochodu: ");
+                carMakeModel = Console.ReadLine();
+            } while (!configValidator.ValidateCarInput(carMakeModel));
             
-            Console.WriteLine("Podaj ilosc stron: ");
-            string pageNumber = Console.ReadLine();
+            do
+            {
+                Console.WriteLine("Podaj ilosc stron: ");
+                pageNumber = Console.ReadLine();
+            } while (!configValidator.ValidatePageInput(pageNumber));
+
 
             return new Config() { SearchPhrase = carMakeModel, NumberOfPagesRequested = Int32.Parse(pageNumber) };
         }
