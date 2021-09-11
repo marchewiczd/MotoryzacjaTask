@@ -1,6 +1,4 @@
-using System.Linq;
-
-namespace Motoryzacja
+namespace Motoryzacja.PageObjects
 {
     using System;
     
@@ -10,6 +8,7 @@ namespace Motoryzacja
     using System.Collections.Generic;
     
     using Extensions;
+    using Data;
     
     public class CarListPageObject
     {

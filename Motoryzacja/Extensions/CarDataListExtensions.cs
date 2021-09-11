@@ -4,6 +4,8 @@ namespace Motoryzacja.Extensions
     using System.Collections.Generic;
     using System.Linq;
     
+    using Data;
+    
     public static class CarDataListExtensions
     {
         public static double CalculateAvgDisplacement(this List<CarData> carDataList)

@@ -1,4 +1,4 @@
-namespace Motoryzacja
+namespace Motoryzacja.Data
 {
     public class CarData
     {

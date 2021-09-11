@@ -4,12 +4,15 @@ using System.IO;
 using System.Linq;
 using Motoryzacja.Extensions;
 using Newtonsoft.Json;
-
 namespace Motoryzacja
 {
     using System;
     using OpenQA.Selenium;
     using OpenQA.Selenium.Chrome;
+    
+    using Data;
+    using Configuration;
+    using PageObjects;
     
     class Program
     {
