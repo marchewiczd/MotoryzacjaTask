@@ -1,9 +1,8 @@
-﻿using System.Collections;
+﻿using OpenQA.Selenium;
 
 namespace Motoryzacja
 {
     using System;
-    
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -21,13 +20,17 @@ namespace Motoryzacja
         static void Main(string[] args)
         {
             Config conf = Config.Instance;
-            CarListPageObject carListPage = new CarListPageObject(WebDriverFactory.CreateDriver(WebDrivers.ChromeDriver));
+            IWebDriver webDriver = WebDriverFactory.CreateDriver(WebDrivers.ChromeDriver);
+            CarListPageObject carListPage = new CarListPageObject(webDriver);
+            
             carListPage.GoToPage();
             carListPage.AcceptCookies();
             carListPage.InputSearchParams(conf.SearchPhrase);
             carListPage.PressSearchButton();
             List<CarData> carDataList = carListPage.GetCarsFromPages(conf.NumberOfPagesRequested).ToList();
             PrintAndSaveResults(carDataList, conf);
+
+            webDriver.Dispose();
         }
 
         private static void PrintAndSaveResults(List<CarData> carDataList, Config config)

@@ -1,6 +1,7 @@
 namespace Motoryzacja.Extensions
 {
     using System;
+    
     using OpenQA.Selenium;
     
     public static class WebElementExtensions

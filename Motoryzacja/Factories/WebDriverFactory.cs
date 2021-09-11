@@ -1,9 +1,10 @@
-using System;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-
 namespace Motoryzacja.Factories
 {
+    using System;
+    
+    using OpenQA.Selenium;
+    using OpenQA.Selenium.Chrome;
+    
     public static class WebDriverFactory
     {
         public static IWebDriver CreateDriver(WebDrivers driverType)
@@ -24,7 +25,6 @@ namespace Motoryzacja.Factories
             
             ChromeDriver webDriver = new ChromeDriver(chromeOptions);
             webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
-            //webDriver.Manage().Window.Maximize();
             
             return webDriver;
         }
