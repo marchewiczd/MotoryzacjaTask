@@ -10,7 +10,7 @@ namespace Motoryzacja.Extensions
     {
         public static double CalculateAvgDisplacement(this List<CarData> carDataList)
         {
-            return Math.Round(((double)carDataList.Sum(x => x.Displacement / 1000) / carDataList.Count), 5);
+            return Math.Round((carDataList.Sum(x => (double)x.Displacement / 1000) / carDataList.Count), 5);
         }
         
         public static double CalculateAvgMileage(this List<CarData> carDataList)
