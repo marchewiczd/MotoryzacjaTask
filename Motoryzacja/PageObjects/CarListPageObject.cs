@@ -58,7 +58,7 @@ namespace Motoryzacja.PageObjects
 
             string[] carInfo = searchPhrase.Split(" ");
             new SelectElement(_webDriver.FindElement(By.XPath(CarMakeSelectXpath))).SelectByText(carInfo[carMakeIndex]);
-            //new SelectElement(_webDriver.FindElement(By.XPath(CarModelSelectXpath))).SelectByText(carInfo[carModelIndex]);
+            new SelectElement(_webDriver.FindElement(By.XPath(CarModelSelectXpath))).SelectByText(carInfo[carModelIndex]);
         }
 
         public void PressSearchButton()
