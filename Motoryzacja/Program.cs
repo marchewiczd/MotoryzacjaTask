@@ -1,17 +1,19 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Motoryzacja.Extensions;
-using Newtonsoft.Json;
+
 namespace Motoryzacja
 {
     using System;
-    using OpenQA.Selenium;
-    using OpenQA.Selenium.Chrome;
     
-    using Data;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    
+    using Newtonsoft.Json;
+    
     using Configuration;
+    using Data;
+    using Extensions;
+    using Factories;
     using PageObjects;
     
     class Program
@@ -19,7 +21,7 @@ namespace Motoryzacja
         static void Main(string[] args)
         {
             Config conf = Config.Instance;
-            CarListPageObject carListPage = new CarListPageObject(GetChromeDriver());
+            CarListPageObject carListPage = new CarListPageObject(WebDriverFactory.CreateDriver(WebDrivers.ChromeDriver));
             carListPage.GoToPage();
             carListPage.AcceptCookies();
             carListPage.InputSearchParams(conf.SearchPhrase);
@@ -51,19 +53,6 @@ namespace Motoryzacja
             };
 
             File.WriteAllText("results.json", JsonConvert.SerializeObject(avgCarData));
-        }
-        
-        private static IWebDriver GetChromeDriver()
-        {
-            ChromeOptions chromeOptions = new ChromeOptions();
-            //chromeOptions.AddArgument("--headless");
-            
-            IWebDriver webDriver = new ChromeDriver(chromeOptions);
-            webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
-            //webDriver.Manage().Window.Maximize();
-            
-            
-            return webDriver;
         }
         
     }
