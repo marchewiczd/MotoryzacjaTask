@@ -16,9 +16,9 @@ namespace Motoryzacja.Configuration
 
         public static Config Instance => _instance.Value;
         
-        public string SearchPhrase { get; private init; }
+        public string SearchPhrase { get; init; }
         
-        public int NumberOfPagesRequested { get; private init; }
+        public int NumberOfPagesRequested { get; init; }
 
         private static Config LoadConfigFromFile()
         {
