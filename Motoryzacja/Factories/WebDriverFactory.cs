@@ -14,7 +14,7 @@ namespace Motoryzacja.Factories
                 case WebDrivers.ChromeDriver:
                     return InitChromeDriver();
                 default:
-                    throw new NotImplementedException($"{driverType.ToString()} is not implemented.");
+                    throw new NotSupportedException($"{driverType.ToString()} is not implemented.");
             }
         }
 

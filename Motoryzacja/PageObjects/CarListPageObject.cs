@@ -55,7 +55,7 @@ namespace Motoryzacja.PageObjects
         {
             const int carMakeIndex = 0;
             const int carModelIndex = 1;
-
+            //todo: a co w wypadku kiedy podamy nieistniejaca marke/model?
             string[] carInfo = searchPhrase.Split(" ");
             new SelectElement(_webDriver.FindElement(By.XPath(CarMakeSelectXpath))).SelectByText(carInfo[carMakeIndex]);
             new SelectElement(_webDriver.FindElement(By.XPath(CarModelSelectXpath))).SelectByText(carInfo[carModelIndex]);
