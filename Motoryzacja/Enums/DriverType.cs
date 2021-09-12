@@ -1,6 +1,6 @@
 namespace Motoryzacja
 {
-    public enum WebDrivers
+    public enum DriverType
     {
         ChromeDriver,
         IeDriver,

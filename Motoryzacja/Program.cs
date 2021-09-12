@@ -1,4 +1,6 @@
-﻿using OpenQA.Selenium;
+﻿using Motoryzacja.Providers;
+using Motoryzacja.Validators;
+using OpenQA.Selenium;
 
 namespace Motoryzacja
 {
@@ -19,18 +21,9 @@ namespace Motoryzacja
     {
         static void Main(string[] args)
         {
-            Config conf = Config.Instance;
-            IWebDriver webDriver = WebDriverFactory.CreateDriver(WebDrivers.ChromeDriver);
-            CarListPageObject carListPage = new CarListPageObject(webDriver);
-            
-            carListPage.GoToPage();
-            carListPage.AcceptCookies();
-            carListPage.InputSearchParams(conf.SearchPhrase);
-            carListPage.PressSearchButton();
-            List<CarData> carDataList = carListPage.GetCarsFromPages(conf.NumberOfPagesRequested).ToList();
-            PrintAndSaveResults(carDataList, conf);
-
-            webDriver.Dispose();
+            Config config = HandleConfigLoading();
+            List<CarData> carDataList = RunWebsiteCrawl(config); 
+            PrintAndSaveResults(carDataList, config);
         }
 
         private static void PrintAndSaveResults(List<CarData> carDataList, Config config)
@@ -57,6 +50,36 @@ namespace Motoryzacja
 
             File.WriteAllText("results.json", JsonConvert.SerializeObject(avgCarData));
         }
-        
+
+        private static Config HandleConfigLoading()
+        {
+            ConfigFactory configFactory = new ConfigFactory();
+            ConfigValidator validator = new ConfigValidator();
+            
+            Config conf = configFactory.LoadConfig<Config>();
+            
+            if (validator.ValidateConfigObject(conf))
+            {
+                conf = configFactory.CreateConfigViaConsole(validator);
+            }
+
+            return conf;
+        }
+
+        private static List<CarData> RunWebsiteCrawl(Config config)
+        {
+            IWebDriver webDriver = WebDriverFactory.CreateDriver(DriverType.ChromeDriver);
+            CarListPageObject carListPage = new CarListPageObject(webDriver);
+            
+            carListPage.GoToPage();
+            carListPage.AcceptCookies();
+            carListPage.InputSearchParams(config.SearchPhrase);
+            carListPage.PressSearchButton();
+            List<CarData> carDataList = carListPage.GetCarsFromPages(config.NumberOfPagesRequested).ToList();
+            
+            webDriver.Dispose();
+
+            return carDataList;
+        }
     }
 }

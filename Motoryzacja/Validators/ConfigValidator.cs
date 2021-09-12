@@ -1,3 +1,6 @@
+using Motoryzacja.Configuration;
+using Newtonsoft.Json;
+
 namespace Motoryzacja.Validators
 {
     using System;
@@ -11,6 +14,7 @@ namespace Motoryzacja.Validators
             const string regexPattern = "^[a-zA-Z0-9 ]*$";
             
             if (carInput == string.Empty
+                || carInput is null
                 || carInput.Split(" ").Length > 2
                 || !Regex.IsMatch(carInput, regexPattern))
             {
@@ -35,6 +39,13 @@ namespace Motoryzacja.Validators
         public bool ValidatePageInput(int pageInput)
         {
             return pageInput >= 0;
+        }
+
+        public bool ValidateConfigObject(Config conf)
+        {
+            return conf != null
+                   && ValidateCarInput(conf.SearchPhrase)
+                   && ValidatePageInput(conf.NumberOfPagesRequested);
         }
     }
 }

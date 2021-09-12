@@ -7,14 +7,14 @@ namespace Motoryzacja.Factories
     
     public static class WebDriverFactory
     {
-        public static IWebDriver CreateDriver(WebDrivers driverType)
+        public static IWebDriver CreateDriver(DriverType driverType)
         {
             switch (driverType)
             {
-                case WebDrivers.ChromeDriver:
+                case DriverType.ChromeDriver:
                     return InitChromeDriver();
                 default:
-                    throw new NotSupportedException($"{driverType.ToString()} is not implemented.");
+                    throw new NotSupportedException($"{driverType.ToString()} is not supported.");
             }
         }
 
