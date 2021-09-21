@@ -58,7 +58,7 @@ namespace Motoryzacja
             
             Config conf = configFactory.LoadConfig<Config>();
             
-            if (validator.ValidateConfigObject(conf))
+            if (!validator.ValidateConfigObject(conf))
             {
                 conf = configFactory.CreateConfigViaConsole(validator);
             }
